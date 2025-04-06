@@ -54,7 +54,7 @@ export const  EmployeeForm = ()=> {
 
   const handleCancel = () => {
     reset();
-    navigate("/view-data");
+    navigate("/table");
   };
 
   return (
@@ -76,7 +76,7 @@ export const  EmployeeForm = ()=> {
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
             {...register("employeeId", { required: "Employee ID is required" })}
           />
-          {errors.employeeId && <p style={{ color: 'red' }}>{errors.employeeId.message}</p>}
+          {errors.employeeId ?<p style={{ color: 'red' }}>{errors.employeeId.message}</p>:<></>}
         </div>
 
         <div style={{ marginBottom: '15px' }}>
