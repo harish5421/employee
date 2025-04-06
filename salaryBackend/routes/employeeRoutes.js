@@ -2,7 +2,6 @@ const express = require('express');
 const Employee = require('../models/Employee');
 const router = express.Router();
 
-// Create Employee
 router.post('/addEmployee', async (req, res) => {
   try {
     const { employeeName, employeeId, department, sex, maritalStatus, salary, address } = req.body;
@@ -23,7 +22,7 @@ router.post('/addEmployee', async (req, res) => {
   }
 });
 
-// Get all Employees
+
 router.get('/getAllEmployees', async (req, res) => {
   try {
     const employees = await Employee.find();
@@ -33,16 +32,14 @@ router.get('/getAllEmployees', async (req, res) => {
   }
 });
 
-//one employee
+
 router.get('/getEmployee/:employeeId', async (req, res) => {
   try {
     const { employeeId } = req.params;
     const employee = await Employee.findOne({ employeeId });
-
     if (!employee) {
       return res.status(404).json({ message: 'Employee not found' });
     }
-
     res.status(200).json(employee);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -50,13 +47,12 @@ router.get('/getEmployee/:employeeId', async (req, res) => {
 });
 
 
-// Edit Employee
 router.put('/edit/:employeeId', async (req, res) => {
   try {
     const { employeeName, department, sex, maritalStatus, salary, address } = req.body;
 
     const updatedEmployee = await Employee.findOneAndUpdate(
-      { employeeId: req.params.employeeId }, // Find by employeeId
+      { employeeId: req.params.employeeId },
       { employeeName, department, sex, maritalStatus, salary, address },
       { new: true }
     );
@@ -71,19 +67,12 @@ router.put('/edit/:employeeId', async (req, res) => {
   }
 });
 
-// Delete Employee
-// DELETE /api/employees/deleteByEmployeeId/:employeeId
 router.delete('/deleteByEmployeeId/:employeeId', async (req, res) => {
   try {
-    // const { employeeId } = req.params;
-
     const deletedEmployee = await Employee.findOneAndDelete({ employeeId: req.params.employeeId });
-
-
     if (!deletedEmployee) {
       return res.status(404).json({ message: 'Employee not found' });
     }
-
     res.status(200).json({ message: 'Employee deleted successfully', deletedEmployee });
   } catch (error) {
     res.status(400).json({ error: error.message });
